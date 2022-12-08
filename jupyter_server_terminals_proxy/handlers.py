@@ -20,7 +20,7 @@ class TermSocket(WebSocketHandler, JupyterHandler):
         self.websocket = None
 
     def origin_check(self):
-        return True
+        return False
 
     def get(self, *args, **kwargs):
         user = self.current_user
