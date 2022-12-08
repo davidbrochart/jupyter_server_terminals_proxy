@@ -1,7 +1,7 @@
 from .app import TerminalsProxyExtensionApp
 
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 
 def _jupyter_server_extension_points():  # pragma: no cover
