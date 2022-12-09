@@ -13,7 +13,6 @@ class TerminalsProxyExtensionApp(ExtensionApp):
     ).tag(config=True)
 
     def initialize_settings(self):
-        #self.settings.update(dict(terminals_available=True, terminal_manager=self.terminal_manager))
         self.settings.update(dict(terminals_available=True, proxy_url=self.proxy_url))
 
     def initialize_handlers(self):
@@ -21,11 +20,12 @@ class TerminalsProxyExtensionApp(ExtensionApp):
             (
                 r"/terminals/websocket/(\w+)",
                 handlers.TermSocket,
-                #{"term_manager": self.terminal_manager},
             )
         )
         self.handlers.extend(api_handlers.default_handlers)
-        #self.serverapp.web_app.settings["terminal_manager"] = self.terminal_manager
         self.serverapp.web_app.settings["terminals_available"] = self.settings[
             "terminals_available"
         ]
+        #print(f"{self.serverapp.terminals_enabled=}")
+        #self.serverapp.terminals_enabled = False
+

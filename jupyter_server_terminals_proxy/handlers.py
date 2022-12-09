@@ -38,7 +38,7 @@ class TermSocket(WebSocketHandler, JupyterHandler):
         return super().get(*args, **kwargs)
 
     async def open(self, name):
-        proxy_url = self.settings['proxy_url']
+        proxy_url = self.settings["proxy_url"]
         ws_url = "ws" + proxy_url[proxy_url.find(":"):]
         self.websocket = await connect(f"{ws_url}/terminals/websocket/{name}")
         asyncio.create_task(self.process_message())
