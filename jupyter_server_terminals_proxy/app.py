@@ -26,6 +26,3 @@ class TerminalsProxyExtensionApp(ExtensionApp):
         self.serverapp.web_app.settings["terminals_available"] = self.settings[
             "terminals_available"
         ]
-        #print(f"{self.serverapp.terminals_enabled=}")
-        #self.serverapp.terminals_enabled = False
-
