@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 from typing import Optional
 
-import httpx
+from httpx2 import AsyncClient
 from tornado import web
 
 from jupyter_server.auth.decorator import authorized
@@ -20,7 +20,7 @@ class TerminalRootHandler(TerminalAPIHandler):
     @web.authenticated
     @authorized
     async def get(self):
-        async with httpx.AsyncClient() as client:
+        async with AsyncClient() as client:
             response = await client.get(f"{self.settings['proxy_url']}/api/terminals")
         self.set_status(response.status_code)
         self.finish(response.text)
@@ -29,7 +29,7 @@ class TerminalRootHandler(TerminalAPIHandler):
     @authorized
     async def post(self):
         data = self.get_json_body() or {}
-        async with httpx.AsyncClient() as client:
+        async with AsyncClient() as client:
             response = await client.post(f"{self.settings['proxy_url']}/api/terminals", data=data)
         self.set_status(response.status_code)
         self.finish(response.json())
@@ -42,7 +42,7 @@ class TerminalHandler(TerminalAPIHandler):
     @authorized
     async def get(self, name):
         url = f"{self.settings['proxy_url']}/api/terminals/{name}"
-        async with httpx.AsyncClient() as client:
+        async with AsyncClient() as client:
             response = await client.get(url)
         self.set_status(response.status_code)
         self.finish(response.json())
@@ -51,7 +51,7 @@ class TerminalHandler(TerminalAPIHandler):
     @authorized
     async def delete(self, name):
         url = f"{self.settings['proxy_url']}/api/terminals/{name}"
-        async with httpx.AsyncClient() as client:
+        async with AsyncClient() as client:
             response = await client.delete(url)
         self.set_status(response.status_code)
         self.finish()
