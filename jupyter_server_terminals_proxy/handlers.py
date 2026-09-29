@@ -50,7 +50,6 @@ class TermSocket(WebSocketHandler, JupyterHandler):
         async with AsyncClient() as client:
             async with client.websocket(
                 f"{ws_url}/terminals/websocket/{name}",
-                client,
                 keepalive_ping_interval_seconds=None,
                 keepalive_ping_timeout_seconds=None,
             ) as self.websocket:
