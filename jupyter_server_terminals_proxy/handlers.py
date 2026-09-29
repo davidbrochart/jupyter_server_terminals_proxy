@@ -2,8 +2,7 @@ import asyncio
 
 from anyio import Event, TASK_STATUS_IGNORED, create_task_group
 from anyio.abc import TaskStatus
-from httpx import AsyncClient
-from httpx_ws import aconnect_ws
+from httpx2 import AsyncClient
 from tornado.websocket import WebSocketHandler
 from tornado import web
 
@@ -49,7 +48,7 @@ class TermSocket(WebSocketHandler, JupyterHandler):
         proxy_url = self.settings["proxy_url"]
         ws_url = "ws" + proxy_url[proxy_url.find(":"):]
         async with AsyncClient() as client:
-            async with aconnect_ws(
+            async with client.websocket(
                 f"{ws_url}/terminals/websocket/{name}",
                 client,
                 keepalive_ping_interval_seconds=None,
